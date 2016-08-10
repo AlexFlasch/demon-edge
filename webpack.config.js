@@ -82,6 +82,7 @@ function getBaseConfig(isProd) {
       ],
       loaders: [
         {test: /\.js$/, exclude: /(node_modules|bower_components)/, loader: "babel-loader"},
+        {json: /\.json$/, exclude: /(node_modules|bower_components|test)/, loader: "json-loader"}
       ]
     },
     eslint: {
