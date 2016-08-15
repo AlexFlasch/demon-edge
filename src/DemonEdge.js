@@ -68,16 +68,11 @@ module.exports = class DemonEdge {
 
 		apiHandler.addSchemas(schemas);
 
-
-		const temp = apiHandler.getApi();
-
-		util.inspect(temp);
-
-		return temp;
+		return apiHandler.getApi();
 	}
 
-	setDaedalusUrl(domain, port) {
-		this.daedalusDomain = domain;
-		this.daedalusPort = port;
+	static setDaedalusUrl(domain = 'localhost', port = '7575') {
+		Utils.daedalusUrl = domain;
+		Utils.daedalusPort = port;
 	}
 };

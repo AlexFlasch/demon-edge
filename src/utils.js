@@ -1,25 +1,13 @@
-var apiKey = '';
-
 module.exports = {
+	daedalusUrl: 'localhost',
+	daedalusPort: 7575,
+
 	log(message) {
 		console.error(`CRIT: ${message}`);
 	},
 
 	clone(obj) {
 		return JSON.parse(JSON.stringify(obj));
-	},
-
-	setApiKey(key) {
-		apiKey = key;
-	},
-
-	getApiKey() {
-		if (apiKey !== '') {
-			return apiKey;
-		} else {
-			this.log('API key is not set');
-			return null;
-		}
 	},
 
 	// concatenates all the urlSegments into one http url
@@ -44,7 +32,7 @@ module.exports = {
 
 	// concatenates all the urlSegments into one http url with query parameters
 	generateRequestUrl(urlSegments, parameters) {
-		var requestUrl = this.generateEndpointRequestUrl(urlSegments);
+		var requestUrl = this.daedalusUrl
 
 		var parameterNames = Object.keys(parameters);
 
