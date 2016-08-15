@@ -63,7 +63,7 @@ module.exports = class DemonEdge {
 			}
 
 			schemaObj.addEndpoints(endpoints);
-			schemas.push(schema);
+			schemas.push(schemaObj);
 		}
 
 		apiHandler.addSchemas(schemas);

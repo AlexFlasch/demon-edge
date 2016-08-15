@@ -8,15 +8,19 @@
 
     <script type="text/javascript">
 
-    document.onready = function() {
+    document.addEventListener('DOMContentLoaded', function(event) {
 
         document.getElementById('gmhTest').onclick = function() {
 
-            // test DemonEdge stuff here
+            var promise = DemonEdge.api.Match.GetMatchHistory.sendRequest();
+
+            promise.then(function(response) {
+                console.log(response);
+            });
 
         }
 
-    }
+    });
 
     </script>
 </head>

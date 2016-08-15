@@ -1,7 +1,7 @@
-const DeObj = window.DemonEdge || {};
-
 const DemonEdge = require('./DemonEdge.js');
 
-DeObj.api = new DemonEdge();
+if(window.DemonEdge !== undefined) {
+	throw new Error('DemonEdge has been instantiated more than once!');
+}
 
-window.DemonEdge = DeObj;
+window.DemonEdge = new DemonEdge();

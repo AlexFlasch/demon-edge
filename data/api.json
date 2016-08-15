@@ -63,7 +63,7 @@
 			]
 		},
 		{
-			"name": "MatchStats",
+			"name": "Match",
 			"urlSegment": "IDOTA2Match_570",
 			"endpoints": [
 				{
