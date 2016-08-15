@@ -1,6 +1,6 @@
 var util = require('util');
 
-var apiJson = require('json!./../data/api.json');
+var apiJson = require('./../data/api.json');
 var ApiHandler = require('./ApiHandler');
 var SchemaHandler = require('./SchemaHandler');
 var EndpointHandler = require('./EndpointHandler');
@@ -24,7 +24,9 @@ module.exports = class DemonEdge {
 		const schemas = [];
 
 		// schema-level generation
-		for (const schema in apiJson.schemas) {
+		for (let i = 0; i < apiJson.schemas.length; i++) {
+			let schema = apiJson.schemas[i];
+
 			const schemaObj = new SchemaHandler(
                                     schema.name,
                                     schema.urlSegment);
@@ -32,7 +34,9 @@ module.exports = class DemonEdge {
 			const endpoints = [];
 
 			// endpoint-level generation
-			for (const endpoint in schema.endpoints) {
+			for (let j = 0; j < schema.endpoints.length; j++) {
+				let endpoint = schema.endpoints[j];
+
 				const endpointObj =
                     new EndpointHandler(
                             endpoint.name,
@@ -43,7 +47,9 @@ module.exports = class DemonEdge {
 				const parameters = [];
 
 				// parameter-level generation
-				for (const parameter in endpoint.parameters) {
+				for (let k = 0; k < endpoint.parameters.length; k++) {
+					let parameter = endpoint.parameters[k];
+
 					const parameterObj = new ParameterHandler(
                                                 parameter.name,
                                                 parameter.urlSegment,

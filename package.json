@@ -15,7 +15,8 @@
     "build-all": "gulp",
     "unit": "mocha --compilers js:babel-core/register --colors ./test/*.spec.js",
     "unit-watch": "mocha --compilers js:babel-core/register --colors -w ./test/*.spec.js",
-    "test": "npm run unit-watch"
+    "test": "npm run unit-watch",
+    "babelify": "browserify src/index.js -o dist/demonedge.js -d -t [ babelify --presets [ es2015 ] ]"
   },
   "repository": {
     "type": "git",
@@ -55,6 +56,8 @@
     "babel-loader": "^6.2.1",
     "babel-plugin-add-module-exports": "^0.1.2",
     "babel-preset-es2015": "^6.3.13",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.0",
     "chai": "^3.4.1",
     "clean-webpack-plugin": "^0.1.8",
     "del": "^2.2.0",
