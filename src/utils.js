@@ -32,12 +32,7 @@ module.exports = {
 		// 2 = endpointUrl
 		// 3 = apiVersion
 		const requestUrl =
-			`${urlSegments[0]}/${urlSegments[1]}/${urlSegments[2]}/${urlSegments[3]}?key=${key}`
-			// var requestUrl = urlSegments[0]; // baseUrl
-			// requestUrl += '/' + urlSegments[1]; // schemaUrl
-			// requestUrl += '/' + urlSegments[2]; // endpointUrl
-			// requestUrl += '/' + urlSegments[3]; // apiVersion
-			// requestUrl += '?key=' + key; // add apiKey
+			`${urlSegments[0]}/${urlSegments[1]}/${urlSegments[2]}/${urlSegments[3]}?key=${key}`;
 
 		return requestUrl;
 	},
@@ -57,13 +52,15 @@ module.exports = {
 	},
 
 	// sends a vanilla js xhr request, but wrapped in an ES6 promise
+	// in order to allow for contacting a separate api server, CORS has to be enabled
 	// return the promise object for the user to resolve when needed
-	sendXHRRequest(url) {
+	sendXHRRequest(url, port, params) {
 		const promise = new Promise((resolve, reject) => {
 			const xhr = new XMLHttpRequest();
 			xhr.open('POST', url, true);
+			xhr.setRequestHeader("Access-Control-Allow-Origin", `${url}:${port}`)
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			xhr.send();
+			xhr.send(params);
 
 			xhr.onload = function() {
 				if (this.status >= 200 && this.status <= 300) {
@@ -71,11 +68,11 @@ module.exports = {
 				} else {
 					reject(this.statusText);
 				}
-			}
+			};
 
 			xhr.onerror = function() {
 				reject(this.statusText);
-			}
+			};
 		});
 
 		return promise;

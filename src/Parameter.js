@@ -21,14 +21,14 @@ module.exports = class Parameter {
 	sendRequest() {
 		let requestUrl = '';
 
-		let baseUrl = 'https://api.steampowered.com/';
 		let apiComponentUrl = this.parent.parent.url;
 		let endpointUrl = this.parent.url;
-		let apiKey = Utils.getApiKey();
 		let parameterStrings = [];
 
+		let parameterObj = {};
+
 		for (let parameter in this.parent.parameters) {
-			let parameterUrl = parameter.url;
+			let parameterName = parameter.name;
 			let parameterValue = parameter.value;
 
 			if (parameterValue === null && parameter.required) {
@@ -38,11 +38,10 @@ module.exports = class Parameter {
 				continue;
 			}
 
-			let parameterString = '&' + parameterUrl + '=' + parameterValue.toString();
-			parameterStrings.push(parameterString);
+			parameterObj[parameterName] = parameterValue;
 		}
 
-		requestUrl = baseUrl + apiComponentUrl + endpointUrl + '?key=' + apiKey;
+		requestUrl = baseUrl + apiComponentUrl + endpointUrl;
 
 		for (let i = 0; i < parameterStrings.length; i++) {
 			requestUrl += parameterStrings[i];
