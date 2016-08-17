@@ -1,7 +1,6 @@
 module.exports = {
 	daedalusUrl: 'localhost',
 	daedalusPort: 7575,
-
 	log(message) {
 		console.error(`CRIT: ${message}`);
 	},
@@ -13,14 +12,12 @@ module.exports = {
 	// concatenates all the urlSegments into one http url
 	// could probably be done a bit more cleanly, but this will work for now
 	generateEndpointRequestUrl(urlSegments) {
-		const key = this.getApiKey();
-
 		// 0 = baseUrl
 		// 1 = schemaUrl
 		// 2 = endpointUrl
 		// 3 = apiVersion
 		const requestUrl =
-			`${urlSegments[0]}/${urlSegments[1]}/${urlSegments[2]}/${urlSegments[3]}?key=${key}`;
+			`${urlSegments[0]}/${urlSegments[1]}/${urlSegments[2]}/${urlSegments[3]}`;
 
 		return requestUrl;
 	},
@@ -42,11 +39,14 @@ module.exports = {
 	// sends a vanilla js xhr request, but wrapped in an ES6 promise
 	// in order to allow for contacting a separate api server, CORS has to be enabled
 	// return the promise object for the user to resolve when needed
-	sendXHRRequest(url, port, params) {
+	sendXHRRequest(url, params) {
 		const promise = new Promise((resolve, reject) => {
 			const xhr = new XMLHttpRequest();
 			xhr.open('POST', url, true);
-			xhr.setRequestHeader("Access-Control-Allow-Origin", `${url}:${port}`)
+			xhr.setRequestHeader("Access-Control-Allow-Origin", `${this.daedalusUrl}:${this.daedalusPort}/${url}`);
+
+			console.log(`${this.daedalusUrl}:${this.daedalusPort}/${url}`);
+
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			xhr.send(params);
 
