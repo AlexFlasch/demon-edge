@@ -1,7 +1,7 @@
+var Utils = require('./Utils');
+
 module.exports = class ApiHandler {
 	constructor() {
-		this.urlSegment = 'https://api.steampowered.com';
-
 		this.schemas = [];
 	}
 
@@ -34,14 +34,10 @@ module.exports = class ApiHandler {
 
 function generateApi(apiHandler) {
 	const api = {};
-	const baseUrl = 'https://api.steampowered.com';
-	api.getUrlSegments = function() {
-		return baseUrl;
-	}
 
 	for (let schemaIndex = 0; schemaIndex < apiHandler.schemas.length; schemaIndex++) {
 		api[apiHandler.schemas[schemaIndex].getName()] =
-			apiHandler.schemas[schemaIndex].generateSchema(baseUrl);
+			apiHandler.schemas[schemaIndex].generateSchema();
 	}
 
 	return api;

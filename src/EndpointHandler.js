@@ -1,12 +1,11 @@
 var Utils = require('./Utils');
 
 module.exports = class EndpointHandler {
-	constructor(name, urlSegment, version, needsParams) {
+	constructor(name, urlSegment, version, needsParams = true) {
 		this.name = name;
-		this.urlSegment = urlSegment;
-		this.version = `v${version}`;
+		// this is different from Crystalys in order to talk to Daedalus properly
+		this.urlSegment = name;
 		this.needsParams = needsParams;
-		if (this.needsParams === undefined) this.needsParams = true; // default value
 
 		this.parameters = [];
 	}
@@ -68,6 +67,8 @@ module.exports = class EndpointHandler {
 				endpointParam = endpoint[this.parameters[parameterIndex].getName()];
 
 				// immediately invoked function to save the proper references to the parameter function
+				// using an IIFE is pretty ugly, but the best way I could come up with to dynamically
+				// generate parameter functions for each endpoint as needed...
 				(function(param) {
 					endpoint[param.name] = function(value) {
 						endpoint.values[param.urlSegment] = value;

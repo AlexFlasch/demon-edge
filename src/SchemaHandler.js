@@ -1,7 +1,8 @@
 module.exports = class SchemaHandler {
 	constructor(name, urlSegment) {
 		this.name = name;
-		this.urlSegment = urlSegment;
+		// different from Crystalys to talk to Daedalus properly
+		this.urlSegment = name;
 
 		this.endpoints = [];
 	}
@@ -32,13 +33,13 @@ module.exports = class SchemaHandler {
 		return this; // allow chaining
 	}
 
-	generateSchema(baseUrl) {
+	generateSchema() {
 		const schema = {};
 		schema.getUrlSegments = function() {
 			return this.urlSegment;
 		}
 
-		const urlSegments = [baseUrl, this.urlSegment];
+		const urlSegments = [this.urlSegment];
 
 		for (let endpointIndex = 0; endpointIndex < this.endpoints.length; endpointIndex++) {
 			schema[this.endpoints[endpointIndex].getName()] =

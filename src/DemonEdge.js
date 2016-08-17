@@ -1,5 +1,6 @@
 var util = require('util');
 
+var Utils = require('./Utils')
 var apiJson = require('./../data/api.json');
 var ApiHandler = require('./ApiHandler');
 var SchemaHandler = require('./SchemaHandler');
@@ -9,13 +10,9 @@ var ParameterHandler = require('./ParameterHandler');
 var steamWebApiVersion = 1;
 
 module.exports = class DemonEdge {
-
-
 	constructor() {
 		// please forgive me. this will probably all be hidden in a json file to be parsed eventually.
 		this.api = this.generateApiStructure();
-		this.daedalusDomain = 'localhost';
-		this.daedalusPort = 7575;
 	}
 
 	generateApiStructure() {
@@ -77,7 +74,7 @@ module.exports = class DemonEdge {
 	}
 
 	setDaedalusUrl(domain, port) {
-		this.daedalusDomain = domain;
-		this.daedalusPort = port;
+		Utils.daedalusUrl = domain;
+		Utils.daedalusPort = port;
 	}
 };

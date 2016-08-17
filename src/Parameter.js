@@ -1,6 +1,5 @@
 'use strict';
 
-var rp = require('request-promise');
 var Utils = require('./Utils');
 
 module.exports = class Parameter {
@@ -25,23 +24,39 @@ module.exports = class Parameter {
 		let endpointUrl = this.parent.url;
 		let parameterStrings = [];
 
-		let parameterObj = {};
+		let parameterArr = [];
 
+		// gather provided parameters into an array instead of an object
+		// also does some error checking for missing required parameters
 		for (let parameter in this.parent.parameters) {
 			let parameterName = parameter.name;
 			let parameterValue = parameter.value;
 
 			if (parameterValue === null && parameter.required) {
-				Utils.log('the request was not sent due to a required parameter not being given a value.');
+				Utils.log(
+					`The request was not sent due to a required parameter 
+					(${parameter.name}) not being given a value.`);
 				return;
 			} else if (parameterValue === null) {
 				continue;
 			}
 
-			parameterObj[parameterName] = parameterValue;
+			parameterArr.push(`${parameterName}=${parameterValue}`);
 		}
 
-		requestUrl = baseUrl + apiComponentUrl + endpointUrl;
+		let parameterString = '';
+
+		// put parameters into format for POSTing
+		// i.e. matchID=9999999&heroID=99
+		for(let i = 0; i < parameterArr.length; i++) {
+			if(i !== 0) {
+				parameterString += "&";
+			}
+
+			parameterString += parameterArr[i];
+		}
+
+		requestUrl = apiComponentUrl + endpointUrl;
 
 		for (let i = 0; i < parameterStrings.length; i++) {
 			requestUrl += parameterStrings[i];
@@ -49,6 +64,6 @@ module.exports = class Parameter {
 
 		Utils.log(requestUrl);
 
-		return Utils.sendXHRRequest(requestUrl);
+		return Utils.sendXHRRequest(requestUrl, parameterString);
 	}
 };

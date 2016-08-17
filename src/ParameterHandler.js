@@ -1,7 +1,7 @@
 module.exports = class ParameterHandler {
 	constructor(name, urlSegment, required) {
 		this.name = name;
-		this.urlSegment = urlSegment;
+		this.urlSegment = name;
 		this.required = required;
 	}
 
