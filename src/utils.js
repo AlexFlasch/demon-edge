@@ -12,12 +12,10 @@ module.exports = {
 	// concatenates all the urlSegments into one http url
 	// could probably be done a bit more cleanly, but this will work for now
 	generateEndpointRequestUrl(urlSegments) {
-		// 0 = baseUrl
-		// 1 = schemaUrl
-		// 2 = endpointUrl
-		// 3 = apiVersion
+		// 0 = schemaUrl
+		// 1 = endpointUrl
 		const requestUrl =
-			`${urlSegments[0]}/${urlSegments[1]}/${urlSegments[2]}/${urlSegments[3]}`;
+			`${urlSegments[0]}/${urlSegments[1]}`;
 
 		return requestUrl;
 	},
