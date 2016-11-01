@@ -85,5 +85,7 @@
     "dist-web": "demonedge.web.js",
     "bundle-node": true
   },
-  "dependencies": {}
+  "dependencies": {
+    "jsonp-promise": "^0.1.2"
+  }
 }

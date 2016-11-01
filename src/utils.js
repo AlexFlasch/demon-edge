@@ -52,9 +52,14 @@ module.exports = {
 
 		var parameterNames = Object.keys(parameters);
 
+		requestUrl += '?';
+
 		// append parameters as such: &<param_name>=<param_value>
 		for (let i = 0; i < parameterNames.length; i++) {
-			requestUrl += `&${parameterNames[i]}=${parameters[parameterNames[i]]}`;
+			if(i !== 0) {
+				requestUrl += '&';
+			}
+			requestUrl += `${parameterNames[i]}=${parameters[parameterNames[i]]}`;
 		}
 
 		return requestUrl;
