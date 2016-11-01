@@ -11,7 +11,7 @@ var steamWebApiVersion = 1;
 
 module.exports = class DemonEdge {
 	constructor() {
-		// please forgive me. this will probably all be hidden in a json file to be parsed eventually.
+		// finally spent ages moving that mess of a json object to its own json file
 		this.api = this.generateApiStructure();
 	}
 
@@ -22,7 +22,7 @@ module.exports = class DemonEdge {
 
 		// schema-level generation
 		for (let i = 0; i < apiJson.schemas.length; i++) {
-			let schema = apiJson.schemas[i];
+			const schema = apiJson.schemas[i];
 
 			const schemaObj = new SchemaHandler(
                                     schema.name,
@@ -32,7 +32,7 @@ module.exports = class DemonEdge {
 
 			// endpoint-level generation
 			for (let j = 0; j < schema.endpoints.length; j++) {
-				let endpoint = schema.endpoints[j];
+				const endpoint = schema.endpoints[j];
 
 				const endpointObj =
                     new EndpointHandler(

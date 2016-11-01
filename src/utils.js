@@ -1,6 +1,32 @@
+var loadJSONP = (function() {
+  var unique = 0;
+  return function(url, callback, context) {
+    // INIT
+    var name = `_jsonp_${unique++}`;
+    if (url.match(/\?/)) url += `&callback="${name}`;
+    else url += `?callback="${name}`;
+    
+    // Create script
+    let script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = url;
+    
+    // Setup handler
+    window[name] = function(data) {
+      callback.call((context || window), data);
+      document.getElementsByTagName('head')[0].removeChild(script);
+      script = null;
+      delete window[name];
+    };
+    
+    // Load JSON
+    document.getElementsByTagName('head')[0].appendChild(script);
+  };
+}());
+
 module.exports = {
 	daedalusUrl: 'localhost',
-	daedalusPort: 7575,
+	daedalusPort: 80,
 	log(message) {
 		console.error(`CRIT: ${message}`);
 	},
@@ -40,15 +66,12 @@ module.exports = {
 	sendXHRRequest(url, params) {
 		const promise = new Promise((resolve, reject) => {
 			const xhr = new XMLHttpRequest();
-			xhr.open('POST', url, true);
-			xhr.setRequestHeader("Access-Control-Allow-Origin", `${this.daedalusUrl}:${this.daedalusPort}/${url}`);
 
-			console.log(`${this.daedalusUrl}:${this.daedalusPort}/${url}`);
+			console.log(`daedalus.flascher.net/${url}`);
 
-			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			xhr.send(params);
+			xhr.open('POST', `http://daedalus.flascher.net/${url}`, true);
 
-			xhr.onload = function() {
+			xhr.onload = function onload() {
 				if (this.status >= 200 && this.status <= 300) {
 					resolve(this.response);
 				} else {
@@ -56,9 +79,11 @@ module.exports = {
 				}
 			};
 
-			xhr.onerror = function() {
+			xhr.onerror = function onerror() {
 				reject(this.statusText);
 			};
+
+			xhr.send(params);
 		});
 
 		return promise;
