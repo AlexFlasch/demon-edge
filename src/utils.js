@@ -1,29 +1,3 @@
-var loadJSONP = (function() {
-  var unique = 0;
-  return function(url, callback, context) {
-    // INIT
-    var name = `_jsonp_${unique++}`;
-    if (url.match(/\?/)) url += `&callback="${name}`;
-    else url += `?callback="${name}`;
-    
-    // Create script
-    let script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = url;
-    
-    // Setup handler
-    window[name] = function(data) {
-      callback.call((context || window), data);
-      document.getElementsByTagName('head')[0].removeChild(script);
-      script = null;
-      delete window[name];
-    };
-    
-    // Load JSON
-    document.getElementsByTagName('head')[0].appendChild(script);
-  };
-}());
-
 module.exports = {
 	daedalusUrl: 'localhost',
 	daedalusPort: 80,
@@ -38,10 +12,11 @@ module.exports = {
 	// concatenates all the urlSegments into one http url
 	// could probably be done a bit more cleanly, but this will work for now
 	generateEndpointRequestUrl(urlSegments) {
-		// 0 = schemaUrl
-		// 1 = endpointUrl
+		// 0 = apiUrl
+		// 1 = schemaUrl
+		// 2 = endpointUrl
 		const requestUrl =
-			`${urlSegments[0]}/${urlSegments[1]}`;
+			`${urlSegments[0]}/${urlSegments[1]}/${urlSegments[2]}`;
 
 		return requestUrl;
 	},

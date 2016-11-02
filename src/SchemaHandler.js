@@ -16,7 +16,7 @@ module.exports = class SchemaHandler {
 	}
 
 	getUrlSegment() {
-		return this.urlSegment;
+		return this.urlSegments;
 	}
 
 	addEndpoint(endpointHandler) {
@@ -33,13 +33,11 @@ module.exports = class SchemaHandler {
 		return this; // allow chaining
 	}
 
-	generateSchema() {
+	generateSchema(urlSegment) {
 		const schema = {};
-		schema.getUrlSegments = function() {
-			return this.urlSegment;
-		}
+		schema.getUrlSegments = () => [urlSegment, this.urlSegment];
 
-		const urlSegments = [this.urlSegment];
+		const urlSegments = [urlSegment, this.urlSegment];
 
 		for (let endpointIndex = 0; endpointIndex < this.endpoints.length; endpointIndex++) {
 			schema[this.endpoints[endpointIndex].getName()] =

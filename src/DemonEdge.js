@@ -16,7 +16,7 @@ module.exports = class DemonEdge {
 	}
 
 	generateApiStructure() {
-		const apiHandler = new ApiHandler();
+		const apiHandler = new ApiHandler(apiJson.urlSegment);
 
 		const schemas = [];
 

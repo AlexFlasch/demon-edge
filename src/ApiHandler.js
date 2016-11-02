@@ -1,8 +1,7 @@
-var Utils = require('./Utils');
-
 module.exports = class ApiHandler {
-	constructor() {
+	constructor(urlSegment) {
 		this.schemas = [];
+		this.urlSegment = urlSegment;
 	}
 
 	getRequestUrl() {
@@ -10,7 +9,14 @@ module.exports = class ApiHandler {
 	}
 
 	getApi() {
-		return generateApi(this);
+		const api = {};
+
+		for (let schemaIndex = 0; schemaIndex < this.schemas.length; schemaIndex++) {
+			api[this.schemas[schemaIndex].getName()] =
+				this.schemas[schemaIndex].generateSchema(this.urlSegment);
+		}
+
+		return api;
 	}
 
 	getSchemas() {
@@ -31,14 +37,3 @@ module.exports = class ApiHandler {
 		return this; // allow chaining
 	}
 };
-
-function generateApi(apiHandler) {
-	const api = {};
-
-	for (let schemaIndex = 0; schemaIndex < apiHandler.schemas.length; schemaIndex++) {
-		api[apiHandler.schemas[schemaIndex].getName()] =
-			apiHandler.schemas[schemaIndex].generateSchema();
-	}
-
-	return api;
-}
