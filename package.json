@@ -4,8 +4,6 @@
   "description": "Client side tool in the Daedalus tool suite.",
   "main": "./index.js",
   "scripts": {
-    "prepublish": "",
-    "preversion": "npm run build-all && npm run unit",
     "version": "git add .",
     "postversion": "git push && git push --tags",
     "build": "gulp build",
