@@ -1,6 +1,6 @@
 {
   "name": "demon-edge",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Client side tool in the Daedalus tool suite.",
   "main": "./index.js",
   "scripts": {
