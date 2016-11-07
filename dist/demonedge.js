@@ -1,6 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports={
 	"apiVersion": 1,
+	"urlSegment": "api",
 	"schemas": [
 		{
 			"name": "Fantasy",
@@ -1232,39 +1233,44 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Utils = require('./Utils');
-
 module.exports = function () {
-	function ApiHandler() {
+	function ApiHandler(urlSegment) {
 		_classCallCheck(this, ApiHandler);
 
 		this.schemas = [];
+		this.urlSegment = urlSegment;
 	}
 
 	_createClass(ApiHandler, [{
-		key: 'getRequestUrl',
+		key: "getRequestUrl",
 		value: function getRequestUrl() {
 			return this.urlSegment;
 		}
 	}, {
-		key: 'getApi',
+		key: "getApi",
 		value: function getApi() {
-			return generateApi(this);
+			var api = {};
+
+			for (var schemaIndex = 0; schemaIndex < this.schemas.length; schemaIndex++) {
+				api[this.schemas[schemaIndex].getName()] = this.schemas[schemaIndex].generateSchema(this.urlSegment);
+			}
+
+			return api;
 		}
 	}, {
-		key: 'getSchemas',
+		key: "getSchemas",
 		value: function getSchemas() {
 			return this.schemas;
 		}
 	}, {
-		key: 'addSchema',
+		key: "addSchema",
 		value: function addSchema(schemaHandler) {
 			this.schemas.push(schemaHandler);
 
 			return this; // allow chaining
 		}
 	}, {
-		key: 'addSchemas',
+		key: "addSchemas",
 		value: function addSchemas(schemaHandlers) {
 			for (var schemaIndex = 0; schemaIndex < schemaHandlers.length; schemaIndex++) {
 				this.schemas.push(schemaHandlers[schemaIndex]);
@@ -1277,17 +1283,7 @@ module.exports = function () {
 	return ApiHandler;
 }();
 
-function generateApi(apiHandler) {
-	var api = {};
-
-	for (var schemaIndex = 0; schemaIndex < apiHandler.schemas.length; schemaIndex++) {
-		api[apiHandler.schemas[schemaIndex].getName()] = apiHandler.schemas[schemaIndex].generateSchema();
-	}
-
-	return api;
-}
-
-},{"./Utils":11}],7:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1316,7 +1312,7 @@ module.exports = function () {
 	_createClass(DemonEdge, [{
 		key: 'generateApiStructure',
 		value: function generateApiStructure() {
-			var apiHandler = new ApiHandler();
+			var apiHandler = new ApiHandler(apiJson.urlSegment);
 
 			var schemas = [];
 
@@ -1599,7 +1595,7 @@ module.exports = function () {
 	}, {
 		key: "getUrlSegment",
 		value: function getUrlSegment() {
-			return this.urlSegment;
+			return this.urlSegments;
 		}
 	}, {
 		key: "addEndpoint",
@@ -1619,13 +1615,15 @@ module.exports = function () {
 		}
 	}, {
 		key: "generateSchema",
-		value: function generateSchema() {
+		value: function generateSchema(urlSegment) {
+			var _this = this;
+
 			var schema = {};
 			schema.getUrlSegments = function () {
-				return this.urlSegment;
+				return [urlSegment, _this.urlSegment];
 			};
 
-			var urlSegments = [this.urlSegment];
+			var urlSegments = [urlSegment, this.urlSegment];
 
 			for (var endpointIndex = 0; endpointIndex < this.endpoints.length; endpointIndex++) {
 				schema[this.endpoints[endpointIndex].getName()] = this.endpoints[endpointIndex].generateEndpoint(urlSegments);
@@ -1655,9 +1653,10 @@ module.exports = {
 	// concatenates all the urlSegments into one http url
 	// could probably be done a bit more cleanly, but this will work for now
 	generateEndpointRequestUrl: function generateEndpointRequestUrl(urlSegments) {
-		// 0 = schemaUrl
-		// 1 = endpointUrl
-		var requestUrl = urlSegments[0] + '/' + urlSegments[1];
+		// 0 = apiUrl
+		// 1 = schemaUrl
+		// 2 = endpointUrl
+		var requestUrl = urlSegments[0] + '/' + urlSegments[1] + '/' + urlSegments[2];
 
 		return requestUrl;
 	},

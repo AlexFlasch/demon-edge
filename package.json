@@ -1,11 +1,9 @@
 {
   "name": "demon-edge",
-  "version": "1.0.3",
-  "description": "ES6 Universal Library Starter",
+  "version": "1.0.5",
+  "description": "Client side tool in the Daedalus tool suite.",
   "main": "./index.js",
   "scripts": {
-    "prepublish": "npm run build-all",
-    "preversion": "npm run build-all && npm run unit",
     "version": "git add .",
     "postversion": "git push && git push --tags",
     "build": "gulp build",
