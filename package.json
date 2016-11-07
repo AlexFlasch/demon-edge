@@ -16,7 +16,7 @@
     "unit": "mocha --compilers js:babel-core/register --colors ./test/*.spec.js",
     "unit-watch": "mocha --compilers js:babel-core/register --colors -w ./test/*.spec.js",
     "test": "npm run unit-watch",
-    "babelify": "browserify src/index.js -o dist/demonedge.js -d -t [ babelify --presets [ es2015 ] ] && cp dist/demonedge.js test/demonedge.js"
+    "babelify": "browserify src/index.js -o dist/demonedge.js -d -t [ babelify --presets [ es2015 ] ] && cp dist/demonedge.js test/demonedge.js && cp dist/demonedge.js lib/index.js"
   },
   "repository": {
     "type": "git",

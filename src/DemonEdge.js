@@ -45,7 +45,7 @@ module.exports = class DemonEdge {
 
 				// parameter-level generation
 				for (let k = 0; k < endpoint.parameters.length; k++) {
-					let parameter = endpoint.parameters[k];
+					const parameter = endpoint.parameters[k];
 
 					const parameterObj = new ParameterHandler(
                                                 parameter.name,
