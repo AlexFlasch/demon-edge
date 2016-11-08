@@ -4,6 +4,7 @@
   "description": "Client side tool in the Daedalus tool suite.",
   "main": "lib/DemonEdge.js",
   "scripts": {
+    "preversion": "babel src --out-dir lib --source-maps-inline",
     "version": "git add .",
     "postversion": "git push && git push --tags",
     "build": "gulp build",
