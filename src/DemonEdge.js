@@ -9,7 +9,7 @@ var ParameterHandler = require('./ParameterHandler');
 
 var steamWebApiVersion = 1;
 
-export class DemonEdge {
+class DemonEdge {
 	constructor() {
 		// finally spent ages moving that mess of a json object to its own json file
 		this.api = this.generateApiStructure();
@@ -77,4 +77,6 @@ export class DemonEdge {
 		Utils.daedalusUrl = domain;
 		Utils.daedalusPort = port;
 	}
-};
+}
+
+module.exports = new DemonEdge();
