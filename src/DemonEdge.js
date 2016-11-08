@@ -9,7 +9,7 @@ var ParameterHandler = require('./ParameterHandler');
 
 var steamWebApiVersion = 1;
 
-export default class DemonEdge {
+export class DemonEdge {
 	constructor() {
 		// finally spent ages moving that mess of a json object to its own json file
 		this.api = this.generateApiStructure();
