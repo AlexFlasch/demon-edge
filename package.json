@@ -84,6 +84,5 @@
     "bundle-node": true
   },
   "dependencies": {
-    "jsonp-promise": "^0.1.2"
   }
 }
