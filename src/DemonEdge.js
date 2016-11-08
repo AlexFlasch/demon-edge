@@ -1,7 +1,7 @@
 var util = require('util');
 
 var Utils = require('./Utils')
-var apiJson = require('./../data/api.json');
+var apiJson = require('./api.json');
 var ApiHandler = require('./ApiHandler');
 var SchemaHandler = require('./SchemaHandler');
 var EndpointHandler = require('./EndpointHandler');
