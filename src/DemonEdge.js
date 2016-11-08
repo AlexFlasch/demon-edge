@@ -13,6 +13,7 @@ class DemonEdge {
 	constructor() {
 		// finally spent ages moving that mess of a json object to its own json file
 		this.api = this.generateApiStructure();
+		this.setDaedalusUrl = setDaedalusUrl;
 	}
 
 	generateApiStructure() {
@@ -72,11 +73,11 @@ class DemonEdge {
 
 		return temp;
 	}
+}
 
-	setDaedalusUrl(domain, port) {
-		Utils.daedalusUrl = domain;
-		Utils.daedalusPort = port;
-	}
+function setDaedalusUrl(domain, port) {
+	Utils.daedalusUrl = domain;
+	Utils.daedalusPort = port;
 }
 
 module.exports = new DemonEdge();
