@@ -1,7 +1,7 @@
 var util = require('util');
 
 var Utils = require('./Utils')
-var apiJson = require('./../data/api.json');
+var apiJson = require('./api.json');
 var ApiHandler = require('./ApiHandler');
 var SchemaHandler = require('./SchemaHandler');
 var EndpointHandler = require('./EndpointHandler');
@@ -9,20 +9,21 @@ var ParameterHandler = require('./ParameterHandler');
 
 var steamWebApiVersion = 1;
 
-module.exports = class DemonEdge {
+class DemonEdge {
 	constructor() {
-		// please forgive me. this will probably all be hidden in a json file to be parsed eventually.
+		// finally spent ages moving that mess of a json object to its own json file
 		this.api = this.generateApiStructure();
+		this.setDaedalusUrl = setDaedalusUrl;
 	}
 
 	generateApiStructure() {
-		const apiHandler = new ApiHandler();
+		const apiHandler = new ApiHandler(apiJson.urlSegment);
 
 		const schemas = [];
 
 		// schema-level generation
 		for (let i = 0; i < apiJson.schemas.length; i++) {
-			let schema = apiJson.schemas[i];
+			const schema = apiJson.schemas[i];
 
 			const schemaObj = new SchemaHandler(
                                     schema.name,
@@ -32,7 +33,7 @@ module.exports = class DemonEdge {
 
 			// endpoint-level generation
 			for (let j = 0; j < schema.endpoints.length; j++) {
-				let endpoint = schema.endpoints[j];
+				const endpoint = schema.endpoints[j];
 
 				const endpointObj =
                     new EndpointHandler(
@@ -45,7 +46,7 @@ module.exports = class DemonEdge {
 
 				// parameter-level generation
 				for (let k = 0; k < endpoint.parameters.length; k++) {
-					let parameter = endpoint.parameters[k];
+					const parameter = endpoint.parameters[k];
 
 					const parameterObj = new ParameterHandler(
                                                 parameter.name,
@@ -67,9 +68,11 @@ module.exports = class DemonEdge {
 
 		return apiHandler.getApi();
 	}
+}
 
-	setDaedalusUrl(domain, port) {
-		Utils.daedalusUrl = domain;
-		Utils.daedalusPort = port;
-	}
-};
+function setDaedalusUrl(domain, port) {
+	Utils.daedalusUrl = domain;
+	Utils.daedalusPort = port;
+}
+
+module.exports = new DemonEdge();

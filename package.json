@@ -1,11 +1,10 @@
 {
   "name": "demon-edge",
-  "version": "1.0.3",
-  "description": "ES6 Universal Library Starter",
-  "main": "./index.js",
+  "version": "1.0.17",
+  "description": "Client side tool in the Daedalus tool suite.",
+  "main": "lib/DemonEdge.js",
   "scripts": {
-    "prepublish": "npm run build-all",
-    "preversion": "npm run build-all && npm run unit",
+    "preversion": "babel src --out-dir lib --source-maps-inline",
     "version": "git add .",
     "postversion": "git push && git push --tags",
     "build": "gulp build",
@@ -16,7 +15,8 @@
     "unit": "mocha --compilers js:babel-core/register --colors ./test/*.spec.js",
     "unit-watch": "mocha --compilers js:babel-core/register --colors -w ./test/*.spec.js",
     "test": "npm run unit-watch",
-    "babelify": "browserify src/index.js -o dist/demonedge.js -d -t [ babelify --presets [ es2015 ] ]"
+    "babelify": "browserify src/index.js -o dist/demonedge.js -d -t [ babelify --presets [ es2015 ] ] && cp dist/demonedge.js test/demonedge.js && cp dist/demonedge.js lib/browser/demon-edge.js",
+    "babel": "babel src --out-dir lib --source-maps-inline"
   },
   "repository": {
     "type": "git",
@@ -51,6 +51,7 @@
   "homepage": "https://github.com/flascher/demon-edge.git",
   "devDependencies": {
     "babel": "^6.3.26",
+    "babel-cli": "^6.18.0",
     "babel-core": "^6.4.0",
     "babel-eslint": "^5.0.0-beta6",
     "babel-loader": "^6.2.1",
