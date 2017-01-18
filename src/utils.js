@@ -47,9 +47,10 @@ module.exports = {
 		const promise = new Promise((resolve, reject) => {
 			const xhr = new XMLHttpRequest();
 
-			console.log(`daedalus.flascher.net/${url}`);
+			console.log(`http://${daedalusUrl}/${url}`);
 
-			xhr.open('POST', `http://daedalus.flascher.net/${url}`, true);
+			xhr.open('POST', `http://${daedalusUrl}/`, true);
+			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
 			xhr.onload = function onload() {
 				if (this.status >= 200 && this.status <= 300) {
@@ -63,7 +64,7 @@ module.exports = {
 				reject(this.statusText);
 			};
 
-			xhr.send(params);
+			xhr.send(url);
 		});
 
 		return promise;
