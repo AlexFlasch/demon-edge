@@ -76,6 +76,7 @@
     "json-loader": "^0.5.4",
     "mocha": "^2.3.4",
     "object-assign": "^4.0.1",
+    "pre-push": "^0.1.1",
     "webpack": "^1.12.11",
     "webpack-node-externals": "^0.4.1"
   },
@@ -88,5 +89,9 @@
   },
   "dependencies": {
     "browserify": "^13.3.0"
-  }
+  },
+  "pre-push": [
+    "babelify",
+    "babel"
+  ]
 }
