@@ -47,9 +47,9 @@ module.exports = {
 		const promise = new Promise((resolve, reject) => {
 			const xhr = new XMLHttpRequest();
 
-			console.log(`http://${daedalusUrl}/${url}`);
+			console.log(`http://${this.daedalusUrl}/${url}`);
 
-			xhr.open('POST', `http://${daedalusUrl}/`, true);
+			xhr.open('POST', `http://${this.daedalusUrl}/`, true);
 			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
 			xhr.onload = function onload() {
