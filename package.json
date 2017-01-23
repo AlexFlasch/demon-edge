@@ -88,6 +88,7 @@
     "bundle-node": true
   },
   "dependencies": {
+    "axios": "^0.15.3",
     "browserify": "^13.3.0"
   },
   "pre-push": [

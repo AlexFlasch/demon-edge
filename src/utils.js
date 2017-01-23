@@ -1,3 +1,5 @@
+var axios = require('axios');
+
 module.exports = {
 	daedalusUrl: 'localhost',
 	daedalusPort: 80,
@@ -43,13 +45,13 @@ module.exports = {
 	// sends a vanilla js xhr request, but wrapped in an ES6 promise
 	// in order to allow for contacting a separate api server, CORS has to be enabled
 	// return the promise object for the user to resolve when needed
-	sendXHRRequest(url, params) {
+	sendXHR(url, params) {
 		const promise = new Promise((resolve, reject) => {
 			const xhr = new XMLHttpRequest();
 
-			console.log(`http://${this.daedalusUrl}/${url}`);
+			console.log(`http://${daedalusUrl}/${url}`);
 
-			xhr.open('POST', `http://${this.daedalusUrl}/`, true);
+			xhr.open('POST', `http://${daedalusUrl}/${url}`, true);
 			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
 			xhr.onload = function onload() {
@@ -64,8 +66,10 @@ module.exports = {
 				reject(this.statusText);
 			};
 
-			xhr.send(url);
+			xhr.send(params);
 		});
+
+		return axios.post(`http://${daedalusUrl}/${url}`, )
 
 		return promise;
 	}

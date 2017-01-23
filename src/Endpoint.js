@@ -22,8 +22,8 @@ module.exports = class Endpoint {
 
 	// will generate the request URL and send the request via a promise, then return the promise obj.
 	sendRequest() {
-		const requestUrl = Utils.generateRequestUrl(this.urlSegments, this.values);
-		const promise = Utils.sendXHRRequest(requestUrl);
+		const requestUrl = Utils.generateEndpointRequestUrl(this.urlSegments);
+		const promise = Utils.sendXHR(requestUrl);
 
 		return promise;
 	}
