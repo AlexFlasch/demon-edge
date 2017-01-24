@@ -7,7 +7,7 @@
     <script src="demonedge.js"></script>
 
     <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', (event) => {
+       document.addEventListener('DOMContentLoaded', (event) => {
             DemonEdge.setDaedalusUrl('daedalus.flascher.net', '80');
 
             document.getElementById('gmhTest').onclick = () => {
@@ -17,10 +17,19 @@
                     console.log(response);
                 });
             };
-        });
+
+            document.getElementById('gmdTest').onclick = () => {
+                var promise = DemonEdge.api.Match.GetMatchDetails.matchID(2620320305).sendRequest();
+
+		promise.then((response) => {
+		    console.log(response);
+		});
+	    };
+       });
     </script>
 </head>
 <body>
     <button id="gmhTest">Get Match History</button>
+    <button id="gmdTest">Get Match Details</button>
 </body>
 </html>

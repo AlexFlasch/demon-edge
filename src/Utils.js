@@ -69,7 +69,7 @@ module.exports = {
 			xhr.send(params);
 		});
 
-		return axios.post(`http://${daedalusUrl}/${url}`, )
+		return axios.post(`http://${this.daedalusUrl}/${url}`, )
 
 		return promise;
 	}
