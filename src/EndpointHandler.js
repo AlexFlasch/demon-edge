@@ -79,9 +79,9 @@ module.exports = class EndpointHandler {
 					endpoint.sendRequest = function() {
 						const requestUrl = Utils.generateEndpointRequestUrl(urlSegments);
 
-						var promise = Utils.sendXHR(requestUrl);
+						let requestParameters = { params: endpoint.values };
 
-						endpoint.values = {};
+						var promise = Utils.sendXHR(requestUrl, requestParameters);
 
 						return promise;
 					};
