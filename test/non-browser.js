@@ -1,6 +1,6 @@
 import DemonEdge from './../lib/DemonEdge';
 
-DemonEdge.setDaedalusUrl('flascher.daedalus.net', 80);
+DemonEdge.setDaedalusUrl('0.0.0.0', 7575);
 
 let promise1 = DemonEdge.api.Match.GetMatchHistory.sendRequest();
 
