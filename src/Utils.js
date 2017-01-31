@@ -54,7 +54,6 @@ var transformParams = (url, params) => {
 			return s.name === urlSegments[1];
 		})[0];
 
-		debugger;
 		let endpoint = schema.endpoints.filter((e) => {
 			return e.name === urlSegments[2];
 		})[0];
@@ -65,7 +64,6 @@ var transformParams = (url, params) => {
 
 		let valveParamName = parameter.urlSegment;
 
-		debugger;
 		valveParams[valveParamName] = params[param];
 	}
 
