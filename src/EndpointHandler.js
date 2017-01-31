@@ -79,9 +79,13 @@ module.exports = class EndpointHandler {
 					endpoint.sendRequest = function() {
 						const requestUrl = Utils.generateEndpointRequestUrl(urlSegments);
 
-						let requestParameters = { params: endpoint.values };
+						const vals = endpoint.values;
+
+						const requestParameters = { ...vals };
 
 						var promise = Utils.sendXHR(requestUrl, requestParameters);
+
+						endpoint.values = {};
 
 						return promise;
 					};
@@ -106,7 +110,11 @@ module.exports = class EndpointHandler {
 					endpoint.sendRequest = function() {
 						const requestUrl = Utils.generateEndpointRequestUrl(urlSegments);
 
-						const promise = Utils.sendXHR(requestUrl);
+						const vals = endpoint.vals;
+
+						const requestParameters = { ...vals };
+
+						const promise = Utils.sendXHR(requestUrl, requestParameters);
 
 						endpoint.values = {};
 
