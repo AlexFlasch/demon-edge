@@ -110,7 +110,7 @@ module.exports = class EndpointHandler {
 					endpoint.sendRequest = function() {
 						const requestUrl = Utils.generateEndpointRequestUrl(urlSegments);
 
-						const vals = endpoint.vals;
+						const vals = endpoint.values;
 
 						const requestParameters = { ...vals };
 

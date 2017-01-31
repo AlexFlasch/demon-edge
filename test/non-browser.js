@@ -15,3 +15,10 @@ debugger;
 promise2.then((response) => {
     console.log(response.data);
 });
+
+let promise3 = DemonEdge.api.Match.GetMatchHistory.matchesRequested(50).accountID(51248543).sendRequest();
+
+debugger;
+promise3.then((response) => {
+    console.log(response.data);
+});
