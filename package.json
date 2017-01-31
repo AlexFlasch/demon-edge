@@ -46,7 +46,8 @@
     "README.md",
     "index.js",
     "lib",
-    "dist"
+    "dist",
+	"data"
   ],
   "homepage": "https://github.com/flascher/demon-edge.git",
   "devDependencies": {
