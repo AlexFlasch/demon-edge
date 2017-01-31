@@ -1,6 +1,6 @@
 {
   "name": "demon-edge",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Client side tool in the Daedalus tool suite.",
   "main": "lib/DemonEdge.js",
   "scripts": {
@@ -47,7 +47,7 @@
     "index.js",
     "lib",
     "dist",
-	"data"
+    "data"
   ],
   "homepage": "https://github.com/flascher/demon-edge.git",
   "devDependencies": {
